@@ -59,3 +59,38 @@ int						ft_hsl_to_hex(int h, float s, float l)
 		set_rgb(&color, 255, 255, 255);
 	return (RGB(color.red, color.green, color.blue));
 }
+
+char					*read_fd(int fd, int size)
+{
+	char		*buffer;
+	int			res;
+	if (fd <= 0 || !(buffer = ft_memalloc(sizeof(char) * size)))
+		return (NULL);
+	if ((res = read(fd, buffer, size)) == size)
+		return (buffer);
+	return (NULL);
+}
+
+unsigned char			read8(int fd)
+{
+	char		*buffer;
+	char		result;
+
+	if (!(buffer = read_fd(fd, 1)))
+		return (-1);
+	result = *buffer;
+	ft_memdel((void**)&buffer);
+	return (result);
+}
+
+unsigned short			read16(int fd)
+{
+	char			*buffer;
+	unsigned short	result;
+
+	if (!(buffer = read_fd(fd, 2)))
+		return (-1);
+	result = *((unsigned short*)buffer);
+	ft_memdel((void**)&buffer);
+	return (result);
+}

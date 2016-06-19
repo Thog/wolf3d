@@ -13,4 +13,10 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 # include "graphics.h"
+# include <unistd.h>
+# include <fcntl.h>
+int						init_data(void);
+unsigned char			read8(int fd);
+unsigned short			read16(int fd);
+
 #endif
