@@ -35,7 +35,7 @@ SRC = ft_memset.c ft_bzero.c ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c \
 	  ft_printf/manage_specials.c ft_printf/manage_str.c \
 	  ft_printf/manage_str.c ft_printf/manage_wstr.c ft_printf/manager_base.c \
 	  ft_printf/parser.c ft_printf/utils.c ft_prgm.c ft_path.c \
-	  ft_strsplitcmp.c ft_array.c
+	  ft_strsplitcmp.c ft_array.c endian.c
 
 OBJ = $(SRC:.c=.o)
 REMOVE = $(OBJ)

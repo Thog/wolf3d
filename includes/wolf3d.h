@@ -15,8 +15,24 @@
 # include "graphics.h"
 # include <unistd.h>
 # include <fcntl.h>
+
+typedef struct			s_env
+{
+	void				*mlx;
+	void				*win;
+	t_image				*render;
+	int					update;
+	unsigned char		*map;
+	unsigned char		map_x;
+	unsigned char		map_y;
+	unsigned short		block_size;
+}						t_env;
+
 int						init_data(void);
-unsigned char			read8(int fd);
-unsigned short			read16(int fd);
+int						parse_header(int fd);
+int						parse_map(int fd);
+char					*read_fd(int fd, int size);
+char					read8(int fd, unsigned char *result);
+char					read16(int fd, unsigned short *result);
 
 #endif

@@ -141,5 +141,7 @@ t_array				*array_dup(t_array *src);
 t_array				*to_array(char **src);
 char				**to_char_array(t_array *src);
 void				destroy_array(t_array *array);
+int					is_le();
+int					is_be();
 
 #endif
