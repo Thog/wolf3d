@@ -35,7 +35,7 @@ int					put_pixel(t_image *img, int x, int y, unsigned int color)
 }
 
 int					draw_line_2d(t_image *img, t_pos *p1, t_pos *p2,
-	t_colorizer *colorizer)
+	unsigned int color)
 {
 	int i;
 	int n;
@@ -43,7 +43,6 @@ int					draw_line_2d(t_image *img, t_pos *p1, t_pos *p2,
 	int error[2];
 	int delta[2];
 
-	(void)colorizer;
 	i = -1;
 	nbr[0] = p1->x;
 	nbr[1] = p1->y;
@@ -54,7 +53,7 @@ int					draw_line_2d(t_image *img, t_pos *p1, t_pos *p2,
 	ft_bzero(error, sizeof(error));
 	while (++i < n)
 	{
-		nbr[2] += put_pixel(img, nbr[0], nbr[1], (*colorizer)(i));
+		nbr[2] += put_pixel(img, nbr[0], nbr[1], color);
 		error[0] += delta[0];
 		error[1] += delta[1];
 		draw_line1(nbr, error, p2, n);
@@ -63,7 +62,7 @@ int					draw_line_2d(t_image *img, t_pos *p1, t_pos *p2,
 }
 
 int					draw_line_3d(t_image *img, t_pos *start, t_pos *end,
-	t_colorizer *colorizer)
+	unsigned int color)
 {
 	int		result;
 	t_pos	*tmp1;
@@ -76,9 +75,7 @@ int					draw_line_3d(t_image *img, t_pos *start, t_pos *end,
 		PROJ_ISO_Y(start->x, start->y, start->z), start->z);
 	tmp2 = new_pos(PROJ_ISO_X(end->x, end->y, end->z),
 		PROJ_ISO_Y(end->x, end->y, end->z), end->z);
-	result = draw_line_2d(img, tmp1, tmp2, colorizer);
-	put_pixel(img, tmp1->x, tmp1->y, (*colorizer)(0));
-	put_pixel(img, tmp2->x, tmp2->y, (*colorizer)(0));
+	result = draw_line_2d(img, tmp1, tmp2, color);
 	ft_memdel((void**)&tmp1);
 	ft_memdel((void**)&tmp2);
 	return (result);

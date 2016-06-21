@@ -62,7 +62,6 @@ t_env					*init_data(void)
 		error = ft_error_retint("Cannot allocate memory for env struct!\n", 1);
 	if (fd == -1)
 		error = ft_error_retint("File not found\n", 1);
-
 	if (!error)
 	{
 		error = parse_header(env, fd);
@@ -70,6 +69,11 @@ t_env					*init_data(void)
 			ft_printf("xSize: %u, ySize: %u, blockSize: %u\n", env->map_x + 1,
 			env->map_y + 1, env->block_size);
 		error = error ? error : parse_map(env, fd);
+		env->pos_x = 14;
+		env->pos_y = 8;
+		env->origin_dir_y = 1;
+		env->origin_dir_x = -1;
+		env->plane_y = 0.66;
 	}
 	close(fd);
 	return (error ? NULL : env);

@@ -63,9 +63,9 @@ int						put_pixel(t_image *img, int x, int y,
 void					set_pixel(t_image *img, int x, int y,
 	unsigned int color);
 int						draw_line_2d(t_image *img, t_pos *start, t_pos *end,
-	t_colorizer *colorizer);
+	unsigned int color);
 int						draw_line_3d(t_image *img, t_pos *start, t_pos *end,
-	t_colorizer *colorizer);
+	unsigned int color);
 int						expose_hook(void *param);
 int						key_hook(int keycode, void *param);
 int						mouse_hook(int button, int x, int y, void *param);

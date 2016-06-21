@@ -24,18 +24,27 @@ typedef struct			s_env
 	void				*win;
 	t_image				*render;
 	int					update;
+	int					temp_x;
 	unsigned char		**map;
 	unsigned char		map_x;
 	unsigned char		map_y;
 	unsigned short		block_size;
+	double				pos_x;
+	double				pos_y;
+	double				origin_dir_x;
+	double				origin_dir_y;
+	double				plane_x;
+	double				plane_y;
 }						t_env;
 
 t_env					*init_data(void);
+int						init_display(t_env *env);
 int						destroy_env(t_env *env, int exit_code);
 int						parse_header(t_env *env, int fd);
 int						parse_map(t_env *env, int fd);
 char					*read_fd(int fd, int size);
 char					read8(int fd, unsigned char *result);
 char					read16(int fd, unsigned short *result);
-
+void					recompile_render(t_env *env);
+unsigned int			get_face_color(unsigned char type);
 #endif
