@@ -15,8 +15,39 @@ int					is_valid_header(int fd)
 
 int						parse_header(t_env *env, int fd)
 {
-	if (!is_valid_header(fd) || !read8(fd, &env->map_x) || !read8(fd, &env->map_y) || !read16(fd, &env->block_size))
+	unsigned short	total_map_bytes;
+
+	if (!is_valid_header(fd) || !read8(fd, &env->map_x)
+		|| !read8(fd, &env->map_y) || !read16(fd, &env->block_size)
+		|| !read16(fd, &total_map_bytes))
 		return (ft_error_retint("Invalid file!\n", 1));
+	return ((total_map_bytes != (env->map_x * env->map_y)) ?
+		ft_error_retint("Invalid map sum\n", 1) : 0);
+}
+
+int						parse_map(t_env *env, int fd)
+{
+	int		x;
+	int		y;
+	unsigned char test;
+
+	if(!(env->map = (unsigned char**)ft_memalloc(
+		sizeof(char*) * (env->map_y + 1))))
+		return (ft_error_retint("Map allocation failed!\n", 1));
+	y = -1;
+	while ((++y) < (env->map_y + 1))
+	{
+		if(!(env->map[y] = (unsigned char*)ft_memalloc(sizeof(char)
+			* (env->map_x + 1))))
+			return (ft_error_retint("Map line allocation failed!\n", 1));
+		x = -1;
+		while ((++x) < (env->map_x + 1))
+		{
+			if (!read8(fd, &test))
+				return (ft_error_retint("Map is incorrect!\n", 1));
+			env->map[y][x] = test;
+		}
+	}
 	return (0);
 }
 
@@ -35,7 +66,10 @@ t_env					*init_data(void)
 	if (!error)
 	{
 		error = parse_header(env, fd);
-		ft_printf("xSize: %x, ySize: %x, blockSize: %x\n", env->map_x, env->map_y, env->block_size);
+		if(!error)
+			ft_printf("xSize: %u, ySize: %u, blockSize: %u\n", env->map_x + 1,
+			env->map_y + 1, env->block_size);
+		error = error ? error : parse_map(env, fd);
 	}
 	close(fd);
 	return (error ? NULL : env);

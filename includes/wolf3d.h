@@ -12,6 +12,8 @@
 
 #ifndef WOLF3D_H
 # define WOLF3D_H
+# define VERSION_MAJOR 1
+# define VERSION_MINOR 0
 # include "graphics.h"
 # include <unistd.h>
 # include <fcntl.h>
@@ -31,7 +33,7 @@ typedef struct			s_env
 t_env					*init_data(void);
 int						destroy_env(t_env *env, int exit_code);
 int						parse_header(t_env *env, int fd);
-int						parse_map(int fd);
+int						parse_map(t_env *env, int fd);
 char					*read_fd(int fd, int size);
 char					read8(int fd, unsigned char *result);
 char					read16(int fd, unsigned short *result);
