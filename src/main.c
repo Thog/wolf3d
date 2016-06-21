@@ -2,7 +2,10 @@
 
 int		main(void)
 {
-	if (init_data())
+	t_env		*env;
+
+	env = init_data();
+	if (!env)
 		return (1);
-	return (0);
+	return (destroy_env(env, 0));
 }

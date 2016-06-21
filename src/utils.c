@@ -60,49 +60,21 @@ int						ft_hsl_to_hex(int h, float s, float l)
 	return (RGB(color.red, color.green, color.blue));
 }
 
-char					*read_fd(int fd, int size)
+int						destroy_env(t_env *env, int exit_code)
 {
-	char		*buffer;
-	int			res;
-	if (fd <= 0 || !(buffer = ft_memalloc(sizeof(char) * size)))
-		return (NULL);
-	if ((res = read(fd, buffer, size)) == size)
-		return (buffer);
-	return (NULL);
-}
-
-char					read8(int fd, unsigned char *result)
-{
-	char		*buffer;
-	char		ret;
-
-	buffer = read_fd(fd, 1);
-	ret = buffer && result;
-	if (result)
-		*result = *buffer;
-	ft_memdel((void**)&buffer);
-	return (ret);
-}
-
-char					read16(int fd, unsigned short *result)
-{
-	char			*buffer;
-	char			tmp;
-	char			ret;
-
-	if (!(buffer = read_fd(fd, 2)) || !result)
-		ret = 0;
-	else
+	if (env)
 	{
-		if (is_le())
+		if (env->render)
 		{
-			tmp = *buffer;
-			*buffer = *(buffer + 1);
-			*(buffer + 1) = tmp;
+			if (env->mlx)
+			{
+				if (env->win)
+					mlx_destroy_window(env->mlx, env->win);
+				mlx_destroy_image(env->mlx, env->render->ptr);
+			}
+			ft_memdel((void*)&env->render);
 		}
-		ret = 1;
-		*result = *((unsigned short*)buffer);
+		ft_memdel((void*)&env);
 	}
-	ft_memdel((void**)&buffer);
-	return (ret);
+	return (exit_code);
 }

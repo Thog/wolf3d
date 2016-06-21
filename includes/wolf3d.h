@@ -22,14 +22,15 @@ typedef struct			s_env
 	void				*win;
 	t_image				*render;
 	int					update;
-	unsigned char		*map;
+	unsigned char		**map;
 	unsigned char		map_x;
 	unsigned char		map_y;
 	unsigned short		block_size;
 }						t_env;
 
-int						init_data(void);
-int						parse_header(int fd);
+t_env					*init_data(void);
+int						destroy_env(t_env *env, int exit_code);
+int						parse_header(t_env *env, int fd);
 int						parse_map(int fd);
 char					*read_fd(int fd, int size);
 char					read8(int fd, unsigned char *result);

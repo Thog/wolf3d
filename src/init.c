@@ -1,6 +1,6 @@
 #include "wolf3d.h"
 
-int			is_valid_header(int fd)
+int					is_valid_header(int fd)
 {
 	char		*header;
 	int			result;
@@ -9,25 +9,34 @@ int			is_valid_header(int fd)
 	if (!header)
 		return (0);
 	result = !ft_memcmp(header, "WOLF3D\0\0\0", 10);
-
 	ft_memdel((void**)&header);
 	return (result);
 }
 
-int			init_data(void)
+int						parse_header(t_env *env, int fd)
+{
+	if (!is_valid_header(fd) || !read8(fd, &env->map_x) || !read8(fd, &env->map_y) || !read16(fd, &env->block_size))
+		return (ft_error_retint("Invalid file!\n", 1));
+	return (0);
+}
+
+t_env					*init_data(void)
 {
 	int					fd;
-	unsigned char		x;
-	unsigned char		y;
-	unsigned short		block;
+	int					error;
+	t_env				*env;
 
 	fd = open("basic.wolf", O_BINARY);
+	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
+		error = ft_error_retint("Cannot allocate memory for env struct!\n", 1);
 	if (fd == -1)
-		return (ft_error_retint("File not found\n", 1));
+		error = ft_error_retint("File not found\n", 1);
 
-	if (!is_valid_header(fd) || !read8(fd, &x) || !read8(fd, &y) || !read16(fd, &block))
-		return (ft_error_retint("Invalid file!\n", 1));
-	ft_printf("xSize: %x, ySize: %x, blockSize: %x\n", x, y, block);
+	if (!error)
+	{
+		error = parse_header(env, fd);
+		ft_printf("xSize: %x, ySize: %x, blockSize: %x\n", env->map_x, env->map_y, env->block_size);
+	}
 	close(fd);
-	return (0);
+	return (error ? NULL : env);
 }
