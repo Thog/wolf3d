@@ -87,13 +87,14 @@ void		recompile_render(t_env *env)
 	double		camera_x;
 	double		dir[2];
 
-
 	x = -1;
+	if (env->render && env->render->data)
+		ft_bzero(env->render->data, env->render->line_size * HEIGHT);
 	while ((++x) < WIDTH)
 	{
 		camera_x = (2 * x) / (double)(WIDTH - 1);
-		dir[0] = env->origin_dir_x + env->plane_x * camera_x;
-		dir[1] = env->origin_dir_y + env->plane_y * camera_x;
+		dir[0] = env->dir_x + env->plane_x * camera_x;
+		dir[1] = env->dir_y + env->plane_y * camera_x;
 		process_raycasting(env, x, dir);
 	}
 }

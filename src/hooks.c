@@ -9,6 +9,14 @@ int				key_hook(int keycode, void *param)
 		env = (t_env*)param;
 		if (keycode == ESCAPE)
 			exit(destroy_env(env, 0));
+		else if (keycode == ARROW_UP)
+			move_forward(env);
+		else if (keycode == ARROW_LEFT)
+			rotate_player(env, 0.15);
+		else if (keycode == ARROW_RIGHT)
+			rotate_player(env, -0.15);
+		else if (keycode == ARROW_DOWN)
+			move_backward(env);
 	}
 	return (param == NULL);
 }
