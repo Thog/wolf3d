@@ -46,7 +46,12 @@ int						parse_map(t_env *env, int fd)
 			if (!read8(fd, &test))
 				return (ft_error_retint("Map is incorrect!\n", 1));
 			env->map[y][x] = test;
+			if (env->pos_x == x && env->pos_y == y)
+				ft_printf("X|");
+			else
+				ft_printf("%d|", env->map[y][x]);
 		}
+		ft_printf("\n");
 	}
 	return (0);
 }
@@ -68,12 +73,12 @@ t_env					*init_data(void)
 		if(!error)
 			ft_printf("xSize: %u, ySize: %u, blockSize: %u\n", env->map_x + 1,
 			env->map_y + 1, env->block_size);
-		error = error ? error : parse_map(env, fd);
 		env->pos_x = 14;
 		env->pos_y = 8;
-		env->origin_dir_y = 1;
-		env->origin_dir_x = -1;
+		env->dir_y = 1;
+		env->dir_x = -1;
 		env->plane_y = 0.66;
+		error = error ? error : parse_map(env, fd);
 	}
 	close(fd);
 	return (error ? NULL : env);

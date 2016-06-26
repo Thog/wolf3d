@@ -63,4 +63,5 @@ unsigned int			get_face_color(unsigned char type);
 void					move_forward(t_env *env);
 void					move_backward(t_env *env);
 void					rotate_player(t_env *env, double speed);
+int						getPos(t_env *env, int x, int y);
 #endif

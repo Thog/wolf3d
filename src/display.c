@@ -1,4 +1,5 @@
 #include "wolf3d.h"
+#include "stdio.h"
 
 int			init_display(t_env *env)
 {
@@ -25,10 +26,9 @@ void		perform_pixel(t_env *env, int *map, double side, double wall_dist)
 
 	line_height = (int)(HEIGHT / wall_dist);
 	start = new_pos(env->temp_x, (HEIGHT - line_height) / 2, 0);
-	start->y = start->y < 0 ? 0 : start->y;
 	end = new_pos(env->temp_x, (HEIGHT + line_height) / 2, 0);
-	end->y = end->y >= HEIGHT ? HEIGHT - 1 : end->y;
-	color = get_face_color(env->map[map[0]][map[1]]) / (2 * side);
+	color = get_face_color(getPos(env, map[0], map[1]) / (2 * side));
+	//ft_printf("Drawing line start {x: %i, y: %i}, end {x: %i, y: %i}\n", start->x, start->y, end->x, end->y);
 	draw_line_2d(env->render, start, end, color);
 	ft_memdel((void**)&start);
 	ft_memdel((void**)&end);
@@ -38,7 +38,7 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 {
 	int		hit;
 	int		visual_side;
-	int		map[2];
+	int		map[3];
 
 	hit = 0;
 	map[0] = (int)env->pos_x;
@@ -46,21 +46,14 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 
 	while(!hit)
 	{
-		if (side[0] < side[1])
-		{
-			side[0] += delta[0];
-			map[0] += step[0];
-			visual_side = 0;
-		}
-		else
-		{
-			side[1] += delta[1];
-			map[1] += step[1];
-			visual_side = 1;
-		}
-		if (env->map[map[0]][map[1]] > 0) hit = 1;
+		visual_side = side[0] > side[1];
+		side[visual_side] += delta[visual_side];
+		map[visual_side] += step[visual_side];
+		if (getPos(env, map[0], map[1]) != 0)
+			hit = 1;
 	}
-	perform_pixel(env, map, visual_side, (map[visual_side] - dir[visual_side] + (1 - step[visual_side])) / 2);
+	map[3] = (int)(!visual_side ? env->pos_x : env->pos_y);
+	perform_pixel(env, map, visual_side, ((map[visual_side] - map[3] + (1 - step[visual_side])) / 2) / dir[visual_side]);
 }
 
 void 		process_raycasting(t_env *env, int x, double *dir)
@@ -71,7 +64,7 @@ void 		process_raycasting(t_env *env, int x, double *dir)
 
 	env->temp_x =  x;
 	delta[0] = sqrt(1 + (dir[1] * dir[1]) / (dir[0] * dir[0]));
-	delta[0] = sqrt(1 + (dir[0] * dir[0]) / (dir[1] * dir[1]));
+	delta[1] = sqrt(1 + (dir[0] * dir[0]) / (dir[1] * dir[1]));
 	step[0] = dir[0] < 0 ? -1 : 1;
 	step[1] = dir[1] < 0 ? -1 : 1;
 	side[0] = step[0] == -1 ? ((env->pos_x - (int)env->pos_x) * delta[0]) :
