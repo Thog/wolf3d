@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:53 by tguillem          #+#    #+#             */
-/*   Updated: 2016/06/28 16:11:11 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/06/28 17:54:36 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int						get_pos(t_env *env, int x, int y)
 {
-	if (x < env->map_x && y < env->map_y)
+	if (x <= env->map_x && y <= env->map_y)
 		return (env->map[x][y]);
 	ft_printf("OutOfMapException: %d, %d\n", x, y);
 	exit(0);
