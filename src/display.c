@@ -32,6 +32,7 @@ void		perform_pixel(t_env *env, int *map, double side, double wall_dist)
 	draw_line_2d(env->render, start, end, color);
 	ft_memdel((void**)&start);
 	ft_memdel((void**)&end);
+	printf("%f\n", wall_dist);
 }
 
 void		perform_dda(t_env *env, double *delta, int *step, double *side, double *dir)
@@ -44,11 +45,13 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 	map[0] = (int)env->pos_x;
 	map[1] = (int)env->pos_y;
 
+	ft_printf("Map position: %d, %d\n==================\n", map[0], map[1]);
 	while(!hit)
 	{
 		visual_side = side[0] > side[1];
 		side[visual_side] += delta[visual_side];
 		map[visual_side] += step[visual_side];
+		printf("Map position: %d, %d\nSide: %f\nDelta: %f\n", map[0], map[1], side[visual_side], delta[visual_side]);
 		if (getPos(env, map[0], map[1]) != 0)
 			hit = 1;
 	}

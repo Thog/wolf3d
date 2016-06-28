@@ -5,6 +5,8 @@ int						getPos(t_env *env, int x, int y)
 {
 	if (x < env->map_x && y < env->map_y)
 		return (env->map[x][y]);
+	ft_printf("OutOfMapException: %d, %d\n", x, y);
+	exit(0);
 	return (0);
 }
 
