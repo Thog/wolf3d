@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/28 16:02:43 by tguillem          #+#    #+#             */
+/*   Updated: 2016/06/28 16:19:54 by tguillem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 #include "stdio.h"
 
@@ -27,8 +39,7 @@ void		perform_pixel(t_env *env, int *map, double side, double wall_dist)
 	line_height = (int)(HEIGHT / wall_dist);
 	start = new_pos(env->temp_x, (HEIGHT - line_height) / 2, 0);
 	end = new_pos(env->temp_x, (HEIGHT + line_height) / 2, 0);
-	color = get_face_color(getPos(env, map[0], map[1]) / (2 * side));
-	//ft_printf("Drawing line start {x: %i, y: %i}, end {x: %i, y: %i}\n", start->x, start->y, end->x, end->y);
+	color = get_face_color(get_pos(env, map[0], map[1]) / (2 * side));
 	draw_line_2d(env->render, start, end, color);
 	ft_memdel((void**)&start);
 	ft_memdel((void**)&end);
@@ -44,28 +55,29 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 	hit = 0;
 	map[0] = (int)env->pos_x;
 	map[1] = (int)env->pos_y;
-
 	ft_printf("Map position: %d, %d\n==================\n", map[0], map[1]);
-	while(!hit)
+	while (!hit)
 	{
 		visual_side = side[0] > side[1];
 		side[visual_side] += delta[visual_side];
 		map[visual_side] += step[visual_side];
-		printf("Map position: %d, %d\nSide: %f\nDelta: %f\n", map[0], map[1], side[visual_side], delta[visual_side]);
-		if (getPos(env, map[0], map[1]) != 0)
+		printf("Map position: %d, %d\nSide: %f\nDelta: %f\n", map[0], map[1],
+			side[visual_side], delta[visual_side]);
+		if (get_pos(env, map[0], map[1]) != 0)
 			hit = 1;
 	}
 	map[2] = (int)(!visual_side ? env->pos_x : env->pos_y);
-	perform_pixel(env, map, visual_side, ((map[visual_side] - map[2] + (1 - step[visual_side])) / 2) / dir[visual_side]);
+	perform_pixel(env, map, visual_side, ((map[visual_side] - map[2] +
+		(1 - step[visual_side])) / 2) / dir[visual_side]);
 }
 
-void 		process_raycasting(t_env *env, int x, double *dir)
+void		process_raycasting(t_env *env, int x, double *dir)
 {
 	double		delta[2];
 	int			step[2];
 	double		side[2];
 
-	env->temp_x =  x;
+	env->temp_x = x;
 	delta[0] = sqrt(1 + (dir[1] * dir[1]) / (dir[0] * dir[0]));
 	delta[1] = sqrt(1 + (dir[0] * dir[0]) / (dir[1] * dir[1]));
 	step[0] = dir[0] < 0 ? -1 : 1;

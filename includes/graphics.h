@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 11:26:50 by tguillem          #+#    #+#             */
-/*   Updated: 2016/06/28 15:48:07 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/06/28 16:20:56 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # else
 #  define ESCAPE 65307
 # endif
+
 typedef int				(*t_transformer)(int x, int y, int z);
 typedef unsigned int	(*t_colorizer)(int iteration);
 

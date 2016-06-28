@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/28 16:03:28 by tguillem          #+#    #+#             */
+/*   Updated: 2016/06/28 16:17:10 by tguillem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
-int					is_valid_header(int fd)
+int						is_valid_header(int fd)
 {
 	char		*header;
 	int			result;
@@ -27,17 +39,17 @@ int						parse_header(t_env *env, int fd)
 
 int						parse_map(t_env *env, int fd)
 {
-	int		x;
-	int		y;
-	unsigned char test;
+	int				x;
+	int				y;
+	unsigned char	test;
 
-	if(!(env->map = (unsigned char**)ft_memalloc(
+	if (!(env->map = (unsigned char**)ft_memalloc(
 		sizeof(char*) * (env->map_y + 1))))
 		return (ft_error_retint("Map allocation failed!\n", 1));
 	y = -1;
 	while ((++y) < (env->map_y + 1))
 	{
-		if(!(env->map[y] = (unsigned char*)ft_memalloc(sizeof(char)
+		if (!(env->map[y] = (unsigned char*)ft_memalloc(sizeof(char)
 			* (env->map_x + 1))))
 			return (ft_error_retint("Map line allocation failed!\n", 1));
 		x = -1;
@@ -46,10 +58,8 @@ int						parse_map(t_env *env, int fd)
 			if (!read8(fd, &test))
 				return (ft_error_retint("Map is incorrect!\n", 1));
 			env->map[y][x] = test;
-			if (env->pos_x == x && env->pos_y == y)
-				ft_printf("X|");
-			else
-				ft_printf("%d|", env->map[y][x]);
+			ft_printf((env->pos_x == x && env->pos_y == y ? "X|" : "%d|"),
+				env->map[y][x]);
 		}
 		ft_printf("\n");
 	}
@@ -70,7 +80,7 @@ t_env					*init_data(void)
 	if (!error)
 	{
 		error = parse_header(env, fd);
-		if(!error)
+		if (!error)
 			ft_printf("xSize: %u, ySize: %u, blockSize: %u\n", env->map_x + 1,
 			env->map_y + 1, env->block_size);
 		env->pos_x = 14;

@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 11:26:50 by tguillem          #+#    #+#             */
-/*   Updated: 2016/06/28 15:48:06 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/06/28 16:21:07 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #  define ARROW_DOWN ARROW_OFFSET + 4
 # endif
 # define ARROW_LEFT ARROW_OFFSET + 1
+
 typedef struct			s_env
 {
 	void				*mlx;
@@ -58,10 +59,8 @@ char					read8(int fd, unsigned char *result);
 char					read16(int fd, unsigned short *result);
 void					recompile_render(t_env *env);
 unsigned int			get_face_color(unsigned char type);
-
-
 void					move_forward(t_env *env);
 void					move_backward(t_env *env);
 void					rotate_player(t_env *env, double speed);
-int						getPos(t_env *env, int x, int y);
+int						get_pos(t_env *env, int x, int y);
 #endif

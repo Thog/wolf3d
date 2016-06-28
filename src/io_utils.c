@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   io_utils.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2016/06/28 16:03:31 by tguillem          #+#    #+#             */
+/*   Updated: 2016/06/28 16:10:36 by tguillem         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "wolf3d.h"
 
 char					*read_fd(int fd, int size)
 {
 	char		*buffer;
 	int			res;
+
 	if (fd <= 0 || !(buffer = ft_memalloc(sizeof(char) * size)))
 		return (NULL);
 	if ((res = read(fd, buffer, size)) == size)
