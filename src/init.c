@@ -62,7 +62,7 @@ t_env					*init_data(void)
 	int					error;
 	t_env				*env;
 
-	fd = open("basic.wolf", O_BINARY);
+	fd = open("basic.wolf", O_RDONLY);
 	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
 		error = ft_error_retint("Cannot allocate memory for env struct!\n", 1);
 	if (fd == -1)

@@ -6,42 +6,38 @@
 #    By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 17:03:41 by tguillem          #+#    #+#              #
-#    Updated: 2016/04/14 07:35:29 by tguillem         ###   ########.fr        #
+#    Updated: 2016/06/28 15:42:26 by tguillem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -g -Wall -Wextra -Werror -I./includes
-PRGFLAGS = -L./libmlx -lmlx -L/usr/lib -lXext -lX11 -L./libft -lft
+CFLAGS = -g -Wall -Wextra -Werror -O3 -march=native -I./includes
+PRGFLAGS = -lft -lmlx -framework OpenGL -framework AppKit
 CC = gcc
 
 NAME = wolf3d
-LIBFT = libft
-LIBMLX = libmlx
-SRC = main.c hooks.c image.c init.c display.c graphics.c move.c io_utils.c utils.c
+LIB = libft
+SRC = display.c graphics.c hooks.c image.c init.c io_utils.c main.c move.c utils.c
 SRCDIR = src
 OUTDIR = out
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 OBJ = $(addprefix $(OUTDIR)/, $(SRC:.c=.o))
 
 $(NAME): $(OUTDIR) $(OBJ)
-	make -C $(LIBFT)
-	make -C $(LIBMLX)
-	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(PRGFLAGS)
-
+	@$(MAKE) -C $(LIB)
+	@$(CC) -o $(NAME) $(CFLAGS) -I./libft -L./libft $(PRGFLAGS) $(OBJ)
 $(OUTDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) -I $(LIBFT) -I $(LIBMLX) -o $@ -c $? $(CFLAGS)
+	@$(CC) -I $(LIB) -o $@ -c $? $(CFLAGS)
 
 $(OUTDIR):
 	@mkdir -p $(OUTDIR)
 
 clean:
-	make -C $(LIBFT) $@
-	make -C $(LIBMLX) $@
+	@$(MAKE) -C $(LIB) $@
 	@rm -f $(OBJ)
 	@rm -rf $(OUTDIR)
 
 fclean: clean
-	make -C $(LIBFT) $@
+	@$(MAKE) -C $(LIB) $@
 	@rm -f $(NAME)
 
 .PHONY: clean fclean re

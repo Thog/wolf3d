@@ -55,8 +55,8 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 		if (getPos(env, map[0], map[1]) != 0)
 			hit = 1;
 	}
-	map[3] = (int)(!visual_side ? env->pos_x : env->pos_y);
-	perform_pixel(env, map, visual_side, ((map[visual_side] - map[3] + (1 - step[visual_side])) / 2) / dir[visual_side]);
+	map[2] = (int)(!visual_side ? env->pos_x : env->pos_y);
+	perform_pixel(env, map, visual_side, ((map[visual_side] - map[2] + (1 - step[visual_side])) / 2) / dir[visual_side]);
 }
 
 void 		process_raycasting(t_env *env, int x, double *dir)
