@@ -16,10 +16,10 @@
 int			init_display(t_env *env)
 {
 	if (!(env->mlx = mlx_init()) ||
-			!(env->win = mlx_new_window(env->mlx, WIDTH, HEIGHT, "wolf3d")))
-		return (1);
+			!(env->win = mlx_new_window(env->mlx, WIDTH, HEIGHT, "wolf3d")) ||
+			!(env->render = new_img(env->mlx, WIDTH, HEIGHT)))
+		return (ft_error_retint("Display cannot be initialized!\n", 1));
 	env->update = 1;
-	env->render = new_img(env->mlx, WIDTH, HEIGHT);
 	ft_bzero(env->render->data, env->render->line_size * HEIGHT);
 	mlx_key_hook(env->win, key_hook, env);
 	mlx_expose_hook(env->win, expose_hook, env);
