@@ -30,6 +30,7 @@ int					put_pixel(t_image *img, int x, int y, unsigned int color)
 {
 	if (!img || x < 0 || x >= img->width || y < 0 || y >= img->height)
 		return (0);
+	color = is_le() ? swap_uint(color) : color;
 	set_pixel(img, x, y, color);
 	return (1);
 }

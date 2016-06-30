@@ -143,5 +143,8 @@ char				**to_char_array(t_array *src);
 void				destroy_array(t_array *array);
 int					is_le();
 int					is_be();
+short				swap_short(short lt);
+int					swap_int(int lt);
+unsigned			swap_uint(unsigned int lt);
 
 #endif

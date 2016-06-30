@@ -82,7 +82,7 @@ int						destroy_env(t_env *env, int exit_code)
 unsigned int			get_face_color(unsigned char type)
 {
 	if (type == 1)
-		return (0xFF0000);
+		return (0xFF00FF);
 	else if (type == 2)
 		return (0x00FF00);
 	else if (type == 3)
