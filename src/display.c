@@ -36,11 +36,12 @@ void		perform_pixel(t_env *env, double *map, double side, double wall_dist)
 	t_pos		*end;
 	int			color;
 
+	wall_dist = fabs(wall_dist);
 	line_height = (int)(HEIGHT / wall_dist);
 	start = new_pos(env->temp_x, (HEIGHT - line_height) / 2, 0);
 	end = new_pos(env->temp_x, (HEIGHT + line_height) / 2, 0);
 	color = get_face_color(get_pos(env, (int)map[0], (int)map[1]) / (2 * side));
-	//color = !side ? color / 2 : color;
+	color = !side ? color / 2 : color;
 	draw_line_2d(env->render, start, end, color);
 	ft_memdel((void**)&start);
 	ft_memdel((void**)&end);
