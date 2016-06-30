@@ -61,12 +61,11 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 		visual_side = side[0] > side[1];
 		side[visual_side] += delta[visual_side];
 		map[visual_side] += step[visual_side];
-		/*printf("Map position: %d, %d\nSide: %f\nDelta: %f\n", map[0], map[1],
-			side[visual_side], delta[visual_side]);*/
 		if (get_pos(env, (int)map[0], (int)map[1]) != 0)
 			hit = 1;
 	}
 	map[2] = (int)(!visual_side ? env->pos_x : env->pos_y);
+	printf("Map position: %f, %f\nSide: %f\nDelta: %f\n", map[0], map[1], side[visual_side], delta[visual_side]);
 	perform_pixel(env, map, visual_side, ((map[visual_side] - map[2] +
 		(1 - step[visual_side])) / 2) / dir[visual_side]);
 }

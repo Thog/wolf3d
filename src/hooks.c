@@ -22,13 +22,13 @@ int				key_hook(int keycode, void *param)
 		if (keycode == ESCAPE)
 			exit(destroy_env(env, 0));
 		else if (keycode == ARROW_UP)
-			move_forward(env);
+			move_forward(env, 0.15);
 		else if (keycode == ARROW_LEFT)
 			rotate_player(env, 0.15);
 		else if (keycode == ARROW_RIGHT)
 			rotate_player(env, -0.15);
 		else if (keycode == ARROW_DOWN)
-			move_backward(env);
+			move_backward(env, 0.15);
 	}
 	return (param == NULL);
 }

@@ -22,14 +22,32 @@ int						get_pos(t_env *env, int x, int y)
 	return (0);
 }
 
-void					move_forward(t_env *env)
+void					move_player(t_env *env, double speed, double modifier)
 {
-	(void)env;
+	int			pos_x;
+	int			pos_y;
+
+	pos_x = env->pos_x + modifier * env->dir_x * speed;
+	pos_y = env->pos_y + modifier * env->dir_y * speed;
+	if (pos_x <= env->map_x && pos_y <= env->map_y)
+	{
+		if (!get_pos(env, pos_x, pos_y))
+		{
+			env->pos_x += env->dir_x * speed * modifier;
+			env->pos_y += env->dir_y * speed * modifier;
+			env->update = 1;
+		}
+	}
 }
 
-void					move_backward(t_env *env)
+void					move_forward(t_env *env, double speed)
 {
-	(void)env;
+	move_player(env, speed, 1.0);
+}
+
+void					move_backward(t_env *env, double speed)
+{
+	move_player(env, speed, -1.0);
 }
 
 void					rotate_player(t_env *env, double speed)
