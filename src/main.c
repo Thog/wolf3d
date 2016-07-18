@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:48 by tguillem          #+#    #+#             */
-/*   Updated: 2016/06/28 16:10:17 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 17:54:24 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		main(void)
 		__TIME__);
 	env = init_data();
 	if (!env || init_display(env))
-		return (1);
+		return (!env ? 1 : 2);
 	mlx_loop(env->mlx);
 	return (destroy_env(env, 0));
 }

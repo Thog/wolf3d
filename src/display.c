@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:02:43 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 14:56:49 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 18:37:16 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@ void		perform_dda(t_env *env, double *data, double *side, double *dir)
 		visual_side = side[0] > side[1];
 		side[visual_side] += data[visual_side];
 		map[visual_side] += data[2 + visual_side];
-		if (get_pos(env, (int)map[0], (int)map[1]) != 0)
-			hit = 1;
+		hit = get_pos(env, (int)map[0], (int)map[1]);
 	}
-	map[2] = (!visual_side ? env->pos_x : env->pos_y);
-	perform_pixel(env, map, visual_side, (map[visual_side] - map[2] +
-		(1 - data[2 + visual_side]) / 2) / dir[visual_side]);
+	if (hit > 0)
+	{
+		map[2] = (!visual_side ? env->pos_x : env->pos_y);
+		perform_pixel(env, map, visual_side, (map[visual_side] - map[2] +
+			(1 - data[2 + visual_side]) / 2) / dir[visual_side]);
+	}
 }
 
 void		process_raycasting(t_env *env, int x, double *ray_dir)

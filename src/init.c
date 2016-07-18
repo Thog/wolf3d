@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:28 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 14:32:28 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 17:25:58 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int						is_valid_header(int fd)
 
 	header = read_fd(fd, 10);
 	if (!header)
-		return (0);
+		return (ft_error_retint("Cannot read header of file\n", 1));
 	result = !ft_memcmp(header, "WOLF3D\0\0\0", 10);
 	ft_memdel((void**)&header);
 	return (result);
@@ -72,6 +72,7 @@ t_env					*init_data(void)
 	int					error;
 	t_env				*env;
 
+	error = 0;
 	fd = open("basic.wolf", O_RDONLY);
 	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
 		error = ft_error_retint("Cannot allocate memory for env struct!\n", 1);
@@ -83,8 +84,8 @@ t_env					*init_data(void)
 		if (!error)
 			ft_printf("xSize: %u, ySize: %u, blockSize: %u\n", env->map_x + 1,
 			env->map_y + 1, env->block_size);
-		env->pos_x = 14;
-		env->pos_y = 8;
+		env->pos_x = 7;
+		env->pos_y = 7;
 		env->dir_y = 1;
 		env->dir_x = -1;
 		env->plane_y = 0.66;

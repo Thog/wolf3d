@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/16 07:47:34 by tguillem          #+#    #+#             */
-/*   Updated: 2016/03/10 16:35:45 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 18:29:13 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char			*ft_itoa_base(int value, int base)
 	size = ft_count_digit(value, base) + (sign == -1 && base == 10);
 	if (!(result = ft_strnew(sizeof(char) * (size))))
 		return (NULL);
+	result += size;
 	while (value)
 	{
 		*--result = BASE_16[(value % base) * sign];

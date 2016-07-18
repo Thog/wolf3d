@@ -6,11 +6,11 @@
 #    By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 17:03:41 by tguillem          #+#    #+#              #
-#    Updated: 2016/06/28 15:42:26 by tguillem         ###   ########.fr        #
+#    Updated: 2016/07/18 17:19:34 by tguillem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -g -Wall -Wextra -Werror -O3 -march=native -I./includes
+CFLAGS = -g -Wall -Wextra -Werror -O0 -march=native -I./includes
 PRGFLAGS = -lft -lmlx -framework OpenGL -framework AppKit
 CC = gcc
 

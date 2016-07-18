@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 12:49:44 by tguillem          #+#    #+#             */
-/*   Updated: 2016/04/14 09:11:28 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 18:35:59 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void				ft_putwstr(wchar_t *strr);
 void				ft_putwstr_fd(wchar_t *strr, int fd);
 int					ft_count_digit(int value, int base);
 char				*ft_itoa_base(int value, int base);
+char				*ft_itoa_prefix(char *prefix, int n);
 
 typedef struct		s_buff
 {

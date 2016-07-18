@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 11:26:50 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 14:31:36 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 18:26:35 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ char					read8(int fd, unsigned char *result);
 char					read16(int fd, unsigned short *result);
 void					recompile_render(t_env *env);
 unsigned int			get_face_color(unsigned char type);
-void					move_forward(t_env *env, double speed);
-void					move_backward(t_env *env, double speed);
 void					rotate_player(t_env *env, double speed);
+void					move_player(t_env *env, double speed, double modifier);
 int						get_pos(t_env *env, int x, int y);
+void					render_infos(t_env *env);
 #endif

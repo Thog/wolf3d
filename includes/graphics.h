@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 11:26:50 by tguillem          #+#    #+#             */
-/*   Updated: 2016/06/28 16:20:56 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 16:45:16 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 #  define ESCAPE 53
 # else
 #  define ESCAPE 65307
+# endif
+# ifndef M_PI
+#  define M_PI acos(-1)
 # endif
 
 typedef int				(*t_transformer)(int x, int y, int z);
