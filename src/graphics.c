@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 13:44:59 by tguillem          #+#    #+#             */
-/*   Updated: 2016/06/28 16:03:22 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 13:02:23 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int					put_pixel(t_image *img, int x, int y, unsigned int color)
 {
 	if (!img || x < 0 || x >= img->width || y < 0 || y >= img->height)
 		return (0);
-	color = is_le() ? swap_uint(color) : color;
 	set_pixel(img, x, y, color);
 	return (1);
 }
