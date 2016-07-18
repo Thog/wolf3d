@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_trim.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguillem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 08:53:56 by tguillem          #+#    #+#             */
-/*   Updated: 2015/12/04 11:14:18 by tguillem         ###   ########.fr       */
+/*   Created: 2016/05/20 16:51:00 by tguillem          #+#    #+#             */
+/*   Updated: 2016/05/20 17:15:30 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_trim(char *src, char excluded)
 {
-	while (*s != c)
-	{
-		if (!*s)
-			return (NULL);
-		s++;
-	}
-	return ((char*)s);
+	char	*tmp;
+
+	while ((tmp = ft_strchr(src, excluded)))
+		*tmp = *(tmp + 1);
+	return (src);
 }

@@ -6,15 +6,13 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/11 14:02:41 by tguillem          #+#    #+#             */
-/*   Updated: 2016/05/20 11:41:12 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/03/22 09:46:20 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
-#ifndef BUFF_SIZE
-# define BUFF_SIZE 4096
-#endif
+#define BUFF_SIZE 4096
 
 static t_buff	*init_buff(t_buff *before, int fd)
 {

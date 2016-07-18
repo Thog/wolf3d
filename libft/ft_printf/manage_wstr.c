@@ -23,6 +23,10 @@ void			ft_putnwstr(const wchar_t *str, size_t len, int fd)
 			i++;
 		else if (*str <= 0x7FF)
 			i += 2;
+		else if (*str <= 0xFFFF)
+			i += 3;
+		else if (*str <= 0x10FFFF)
+			i += 4;
 		if (i <= len)
 			ft_putwchar_fd(*str++, fd);
 	}
@@ -36,12 +40,16 @@ static size_t	calc_wstrlen(wchar_t *str, int precision, size_t i)
 		return (calc_wstrlen(str + 1, precision - 1, i + 1));
 	else if (*str <= 0x7FF && precision >= 2)
 		return (calc_wstrlen(str + 1, precision - 2, i + 2));
+	else if (*str <= 0xFFFF && precision >= 3)
+		return (calc_wstrlen(str + 1, precision - 3, i + 3));
+	else if (*str <= 0x10FFFF && precision >= 4)
+		return (calc_wstrlen(str + 1, precision - 4, i + 4));
 	else
 		return (i);
 }
 
 ssize_t			ft_printf_manage_wstr(char **format, va_list *args,
-		t_data *data)
+		t_pdata *data)
 {
 	wchar_t	*str;
 	size_t	strlen;

@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_isstrnum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguillem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 08:53:56 by tguillem          #+#    #+#             */
-/*   Updated: 2015/12/04 11:14:18 by tguillem         ###   ########.fr       */
+/*   Created: 2016/04/27 15:46:23 by tguillem          #+#    #+#             */
+/*   Updated: 2016/05/03 00:06:36 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int				ft_isstrnum(char *str)
 {
-	while (*s != c)
-	{
-		if (!*s)
-			return (NULL);
-		s++;
-	}
-	return ((char*)s);
+	if (!str || !*str)
+		return (0);
+	while (*str)
+		if (!ft_isdigit(*str++))
+			return (0);
+	return (1);
 }

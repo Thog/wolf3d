@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tguillem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 08:53:41 by tguillem          #+#    #+#             */
-/*   Updated: 2016/05/20 11:47:23 by tguillem         ###   ########.fr       */
+/*   Updated: 2015/12/04 11:19:18 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ char	*ft_strrchr(const char *s, int c)
 	{
 		if (*s == c)
 			result = (char*)s;
-		++s;
+		s++;
 	}
-	return (!c ? (char*)s : result);
+	if (!c)
+		result = (char*)s;
+	return (result);
 }

@@ -6,11 +6,11 @@
 #    By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/07/21 12:17:37 by tguillem          #+#    #+#              #
-#    Updated: 2016/05/20 12:17:09 by tguillem         ###   ########.fr        #
+#    Updated: 2016/07/18 18:45:35 by tguillem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -g -Wextra -Wall -Werror -O3 -march=native -I./
+CFLAGS = -g -Wextra -Wall -Werror -march=native -I./
 CC = gcc
 
 NAME = libft.a
@@ -35,7 +35,8 @@ SRC = ft_memset.c ft_bzero.c ft_strlen.c ft_strdup.c ft_strcpy.c ft_strncpy.c \
 	  ft_printf/manage_specials.c ft_printf/manage_str.c \
 	  ft_printf/manage_str.c ft_printf/manage_wstr.c ft_printf/manager_base.c \
 	  ft_printf/parser.c ft_printf/utils.c ft_prgm.c ft_path.c \
-	  ft_strsplitcmp.c ft_array.c endian.c
+	  ft_strsplitcmp.c ft_array.c ft_lstget.c ft_isstrnum.c ft_trim.c \
+	  endian.c
 
 OBJ = $(SRC:.c=.o)
 REMOVE = $(OBJ)

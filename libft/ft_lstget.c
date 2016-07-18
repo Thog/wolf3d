@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_lstget.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tguillem <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 08:53:56 by tguillem          #+#    #+#             */
-/*   Updated: 2015/12/04 11:14:18 by tguillem         ###   ########.fr       */
+/*   Created: 2016/04/27 10:44:06 by tguillem          #+#    #+#             */
+/*   Updated: 2016/04/27 10:47:14 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+t_list				*ft_lstget(t_list *lst, void *data, size_t data_size)
 {
-	while (*s != c)
+	while (lst)
 	{
-		if (!*s)
-			return (NULL);
-		s++;
+		if (lst->content_size == data_size &&
+			ft_memcmp(data, lst->content, data_size))
+			return (lst);
+		lst = lst->next;
 	}
-	return ((char*)s);
+	return (NULL);
 }

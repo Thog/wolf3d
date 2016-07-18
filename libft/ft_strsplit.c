@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/25 09:59:45 by tguillem          #+#    #+#             */
-/*   Updated: 2016/05/20 11:56:01 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/03/23 16:21:22 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static size_t		word_length(const char *str, char separator)
 	length = 0;
 	while (*str != separator && *str)
 	{
-		++length;
-		++str;
+		length++;
+		str++;
 	}
 	return (length);
 }
@@ -62,10 +62,10 @@ char				**ft_strsplit(char const *s, char c)
 			while (i--)
 			{
 				while (*s == c && *s)
-					++s;
-				if (!(*result = ft_strsub(s, 0, word_length(s, c))))
+					s++;
+				if (!(*(result++) = ft_strsub(s, 0, word_length(s, c))))
 					return (NULL);
-				s += ft_strlen(*(result++));
+				s += word_length(s, c);
 			}
 			*result = NULL;
 			return (result - word_count);

@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 12:49:44 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 18:35:59 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 18:49:18 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
 int					ft_isstralnum(char *str);
+int					ft_isstrnum(char *str);
 
 typedef struct		s_list
 {
@@ -91,7 +92,7 @@ void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *));
-
+t_list				*ft_lstget(t_list *lst, void *data, size_t data_size);
 size_t				ft_lstsize(t_list *lst);
 int					ft_iswhitespace(int c);
 int					ft_isblank(int c);
@@ -113,7 +114,6 @@ void				ft_putwstr(wchar_t *strr);
 void				ft_putwstr_fd(wchar_t *strr, int fd);
 int					ft_count_digit(int value, int base);
 char				*ft_itoa_base(int value, int base);
-char				*ft_itoa_prefix(char *prefix, int n);
 
 typedef struct		s_buff
 {
@@ -142,10 +142,12 @@ t_array				*array_dup(t_array *src);
 t_array				*to_array(char **src);
 char				**to_char_array(t_array *src);
 void				destroy_array(t_array *array);
+char				*ft_trim(char *src, char excluded);
 int					is_le();
 int					is_be();
 short				swap_short(short lt);
 int					swap_int(int lt);
 unsigned			swap_uint(unsigned int lt);
+char				*ft_itoa_prefix(char *prefix, int n);
 
 #endif
