@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:02:43 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 14:32:44 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 14:56:49 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int			init_display(t_env *env)
 	ft_bzero(env->render->data, env->render->line_size * HEIGHT);
 	mlx_key_hook(env->win, key_hook, env);
 	mlx_expose_hook(env->win, expose_hook, env);
-	//mlx_mouse_hook(env->win, mouse_hook, env);
-	//mlx_hook(env->win, 6, (1L << 6), motion_hook, env);
 	mlx_loop_hook(env->mlx, loop_hook, env);
 	return (0);
 }
@@ -47,7 +45,7 @@ void		perform_pixel(t_env *env, double *map, int side, double wall_dist)
 	ft_memdel((void**)&end);
 }
 
-void		perform_dda(t_env *env, double *delta, int *step, double *side, double *dir)
+void		perform_dda(t_env *env, double *data, double *side, double *dir)
 {
 	int		hit;
 	int		visual_side;
@@ -56,39 +54,34 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 	hit = 0;
 	map[0] = (int)env->pos_x;
 	map[1] = (int)env->pos_y;
-	//printf("Map position: %f, %f\n==================\n", map[0], map[1]);
 	while (!hit)
 	{
 		visual_side = side[0] > side[1];
-		side[visual_side] += delta[visual_side];
-		map[visual_side] += step[visual_side];
+		side[visual_side] += data[visual_side];
+		map[visual_side] += data[2 + visual_side];
 		if (get_pos(env, (int)map[0], (int)map[1]) != 0)
 			hit = 1;
 	}
 	map[2] = (!visual_side ? env->pos_x : env->pos_y);
-	//printf("Map position: %f, %f\nSide: %f\nDelta: %f\n", map[0], map[1], side[visual_side], delta[visual_side]);
 	perform_pixel(env, map, visual_side, (map[visual_side] - map[2] +
-		(1 - step[visual_side]) / 2) / dir[visual_side]);
+		(1 - data[2 + visual_side]) / 2) / dir[visual_side]);
 }
 
 void		process_raycasting(t_env *env, int x, double *ray_dir)
 {
-	double		delta[2];
-	int			step[2];
 	double		side[2];
+	double		data[4];
 
 	env->temp_x = x;
-	delta[0] = sqrt(1 + (ray_dir[1] * ray_dir[1]) / (ray_dir[0] * ray_dir[0]));
-	delta[1] = sqrt(1 + (ray_dir[0] * ray_dir[0]) / (ray_dir[1] * ray_dir[1]));
-	step[0] = ray_dir[0] < 0 ? -1 : 1;
-	step[1] = ray_dir[1] < 0 ? -1 : 1;
-	side[0] = step[0] == -1 ? ((env->pos_x - (int)env->pos_x) * delta[0]) :
-		(((int)env->pos_x + 1.0 - env->pos_x) * delta[0]);
-	side[1] = step[1] == -1 ? ((env->pos_y - (int)env->pos_y) * delta[1]) :
-		(((int)env->pos_y + 1.0 - env->pos_y) * delta[1]);
-	//printf("sideX = %f\n", ((env->pos_x + 1 - env->pos_x)) * delta[0]);
-	//printf("sideX = %f\nsideY = %f\ndeltaX = %f\ndeltaY = %f\n", side[0], side[1], delta[0], delta[1]);
-	perform_dda(env, delta, step, side, ray_dir);
+	data[0] = sqrt(1 + (ray_dir[1] * ray_dir[1]) / (ray_dir[0] * ray_dir[0]));
+	data[1] = sqrt(1 + (ray_dir[0] * ray_dir[0]) / (ray_dir[1] * ray_dir[1]));
+	data[2] = ray_dir[0] < 0 ? -1 : 1;
+	data[3] = ray_dir[1] < 0 ? -1 : 1;
+	side[0] = data[2] == -1 ? ((env->pos_x - (int)env->pos_x) * data[0]) :
+		(((int)env->pos_x + 1.0 - env->pos_x) * data[0]);
+	side[1] = data[3] == -1 ? ((env->pos_y - (int)env->pos_y) * data[1]) :
+		(((int)env->pos_y + 1.0 - env->pos_y) * data[1]);
+	perform_dda(env, data, side, ray_dir);
 }
 
 void		recompile_render(t_env *env)
@@ -105,7 +98,6 @@ void		recompile_render(t_env *env)
 		camera_x = (2 * x) / (double)(WIDTH - 1);
 		ray_dir[0] = env->dir_x + env->plane_x * camera_x;
 		ray_dir[1] = env->dir_y + env->plane_y * camera_x;
-		//printf("cameraX = %f\nrayX = %f\nrayY = %f\n", camera_x, ray_dir[0], ray_dir[1]);
 		process_raycasting(env, x, ray_dir);
 	}
 }

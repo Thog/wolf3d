@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:56 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 12:54:53 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 14:54:43 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int						destroy_env(t_env *env, int exit_code)
 
 unsigned int			get_face_color(unsigned char type)
 {
-	printf("Type: %d\n", type);
 	if (type == 1)
 		return (0xFF00FF);
 	else if (type == 2)

@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:53 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 14:32:33 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 14:56:35 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,4 @@ void					rotate_player(t_env *env, double speed)
 	env->plane_x = temp * cos(speed) - env->plane_y * sin(speed);
 	env->plane_y = temp * sin(speed) + env->plane_y * cos(speed);
 	env->update = 1;
-	printf("dirX = %f, dirY = %f, planeX = %f, planeY = %f\n", env->dir_x,
-		env->dir_y, env->plane_x, env->plane_y);
 }
