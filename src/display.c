@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:02:43 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 12:53:27 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 14:32:44 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void		perform_pixel(t_env *env, double *map, int side, double wall_dist)
 	start = new_pos(env->temp_x, (HEIGHT - line_height) / 2, 0);
 	end = new_pos(env->temp_x, (HEIGHT + line_height) / 2, 0);
 	color = get_face_color(get_pos(env, (int)map[0], (int)map[1]));
-	printf("COLOR: %x\n", color);
 	draw_line_2d(env->render, start, end, color);
 	ft_memdel((void**)&start);
 	ft_memdel((void**)&end);
@@ -66,10 +65,10 @@ void		perform_dda(t_env *env, double *delta, int *step, double *side, double *di
 		if (get_pos(env, (int)map[0], (int)map[1]) != 0)
 			hit = 1;
 	}
-	map[2] = (int)(!visual_side ? env->pos_x : env->pos_y);
+	map[2] = (!visual_side ? env->pos_x : env->pos_y);
 	//printf("Map position: %f, %f\nSide: %f\nDelta: %f\n", map[0], map[1], side[visual_side], delta[visual_side]);
-	perform_pixel(env, map, visual_side, ((map[visual_side] - map[2] +
-		(1 - step[visual_side])) / 2) / dir[visual_side]);
+	perform_pixel(env, map, visual_side, (map[visual_side] - map[2] +
+		(1 - step[visual_side]) / 2) / dir[visual_side]);
 }
 
 void		process_raycasting(t_env *env, int x, double *ray_dir)

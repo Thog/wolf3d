@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:53 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 12:51:54 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 14:32:33 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int						get_pos(t_env *env, int x, int y)
 {
 	if (x <= env->map_x && y <= env->map_y)
 		return (env->map[x][y]);
-	ft_printf("OutOfMapException: %d, %d\n", x, y);
-	exit(0);
-	return (0);
+	return (-1);
 }
 
 void					move_player(t_env *env, double speed, double modifier)
@@ -31,7 +29,7 @@ void					move_player(t_env *env, double speed, double modifier)
 	pos_y = env->pos_y + modifier * env->dir_y * speed;
 	if (pos_x <= env->map_x && pos_y <= env->map_y)
 	{
-		if (!get_pos(env, pos_x, pos_y))
+		if (get_pos(env, pos_x, pos_y) <= 0)
 		{
 			env->pos_x += env->dir_x * speed * modifier;
 			env->pos_y += env->dir_y * speed * modifier;

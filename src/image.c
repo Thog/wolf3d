@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/07 13:44:56 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 13:04:24 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/07/18 13:54:46 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		set_pixel(t_image *img, int x, int y, unsigned int color)
 	int		pos;
 
 	pos = (x * img->byte_per_pixel) + y * img->line_size;
+	color = img->endian ? swap_uint(color) : color;
 	img->data[pos] = color;
 	img->data[pos + 2] = color >> 16;
 	img->data[pos + 1] = color >> 8;
