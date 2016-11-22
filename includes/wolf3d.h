@@ -116,4 +116,5 @@ void					render_infos(t_env *env);
 int						key_press(int keycode, void *param);
 int						key_release(int keycode, void *param);
 void					key_update(t_env *env);
+int						get_pos(t_env *env, int x, int y);
 #endif

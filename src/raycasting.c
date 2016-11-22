@@ -44,7 +44,7 @@ static void	perform_dda(t_env *e)
 			e->draw->map_y += e->draw->step_y;
 			e->draw->side = 1;
 		}
-		if (e->map[e->draw->map_x][e->draw->map_y] > 0)
+		if (get_pos(e, e->draw->map_x, e->draw->map_y) != 0)
 			e->draw->hit = 1;
 	}
 }
@@ -61,7 +61,7 @@ static void	compute_distance(t_env *e)
 				/ e->camera->dir_y);
 	if (e->camera->dist_wall <= 0.005)
 		e->camera->dist_wall = 0.005;
-	e->draw->height = fabs((int)(HEIGHT / e->camera->dist_wall));
+	e->draw->height = ABS((int)(HEIGHT / e->camera->dist_wall));
 	e->draw->start = (-e->draw->height / 2) + HEIGHT / 2;
 	if (e->draw->start < 0)
 		e->draw->start = 0;

@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CFLAGS = -g -Wall -Wextra -Werror -I./includes
-PRGFLAGS = -L./libmlx -lmlx -L/usr/lib -lXext -lX11 -L./libft -lft
+PRGFLAGS = -framework OpenGL -framework AppKit -L./libmlx -lmlx -L/tmp/ -L./libft -lft
 CC = gcc
 
 NAME = wolf3d

@@ -53,22 +53,22 @@ void					rotate_player_left(t_env *e)
 
 void					move_player_down(t_env *e)
 {
-	if (e->map[(int)(e->player->pos_x - e->player->dir_x
-				* e->player->speed_move)][(int)e->player->pos_y] == 0)
+	if (get_pos(e, (int)(e->player->pos_x - e->player->dir_x
+				* e->player->speed_move), (int)e->player->pos_y) == 0)
 		e->player->pos_x -= e->player->dir_x * e->player->speed_move;
-	if (e->map[(int)e->player->pos_x][(int)(e->player->pos_y - e->player->dir_y
-				* e->player->speed_move)] == 0)
+	if (get_pos(e, (int)e->player->pos_x, (int)(e->player->pos_y -
+				e->player->dir_y * e->player->speed_move)) == 0)
 		e->player->pos_y -= e->player->dir_y * e->player->speed_move;
 	e->update = 1;
 }
 
 void					move_player_up(t_env *e)
 {
-	if (e->map[(int)(e->player->pos_x + e->player->dir_x
-				* e->player->speed_move)][(int)(e->player->pos_y)] == 0)
+	if (get_pos(e, (int)(e->player->pos_x + e->player->dir_x
+				* e->player->speed_move), (int)(e->player->pos_y)) == 0)
 		e->player->pos_x += e->player->dir_x * e->player->speed_move;
-	if (e->map[(int)(e->player->pos_x)][(int)(e->player->pos_y + e->player->dir_y
-				* e->player->speed_move)] == 0)
+	if (get_pos(e, (int)(e->player->pos_x), (int)(e->player->pos_y +
+				e->player->dir_y * e->player->speed_move)) == 0)
 		e->player->pos_y += e->player->dir_y * e->player->speed_move;
 	e->update = 1;
 }

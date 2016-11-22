@@ -13,6 +13,13 @@
 #include "wolf3d.h"
 #include "stdio.h"
 
+int			get_pos(t_env *env, int x, int y)
+{
+	if (x >= 0 && y >= 0 && x <= env->map_x && y <= env->map_y)
+		return (env->map[x][y]);
+	return (-1);
+}
+
 int			init_display(t_env *env)
 {
 	if (!(env->mlx = mlx_init()) ||
@@ -51,7 +58,7 @@ static void	draw_column(t_env *e)
 	int				y;
 
 	y = -1;
-	while ((y++) < HEIGHT)
+	while ((++y) < HEIGHT)
 	{
 		if (y < e->draw->start)
 			color = CYAN;
@@ -65,13 +72,14 @@ static void	draw_column(t_env *e)
 
 void		recompile_render(t_env *env)
 {
-	env->draw->x = -1;
+	env->draw->x = 0;
 	if (env->render && env->render->data)
 		ft_bzero(env->render->data, env->render->line_size * HEIGHT);
-	while ((++env->draw->x) < WIDTH)
+	while (env->draw->x < WIDTH)
 	{
 		setup_pass(env);
 		process_raycasting(env);
 		draw_column(env);
+		env->draw->x++;
 	}
 }
