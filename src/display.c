@@ -21,85 +21,57 @@ int			init_display(t_env *env)
 		return (ft_error_retint("Display cannot be initialized!\n", 1));
 	env->update = 1;
 	ft_bzero(env->render->data, env->render->line_size * HEIGHT);
-	mlx_key_hook(env->win, key_hook, env);
+	mlx_hook(env->win, KEYPRESS, KEYPRESSMASK, key_press, env);
+	mlx_hook(env->win, KEYRELEASE, KEYRELEASEMASK, key_release, env);
 	mlx_expose_hook(env->win, expose_hook, env);
 	mlx_loop_hook(env->mlx, loop_hook, env);
 	return (0);
 }
 
-void		perform_pixel(t_env *env, double *map, int side, double wall_dist)
+static void	setup_pass(t_env *e)
 {
-	int			line_height;
-	t_pos		*start;
-	t_pos		*end;
-	int			color;
-
-	(void)side;
-	wall_dist = fabs(wall_dist);
-	line_height = (int)(HEIGHT / wall_dist);
-	start = new_pos(env->temp_x, (HEIGHT - line_height) / 2, 0);
-	end = new_pos(env->temp_x, (HEIGHT + line_height) / 2, 0);
-	color = get_face_color(get_pos(env, (int)map[0], (int)map[1]));
-	draw_line_2d(env->render, start, end, color);
-	ft_memdel((void**)&start);
-	ft_memdel((void**)&end);
+	e->camera->x = 2 * e->draw->x / (double)WIDTH - 1;
+	e->draw->side = 0;
+	e->draw->hit = 0;
+	e->camera->pos_x = e->player->pos_x;
+	e->camera->pos_y = e->player->pos_y;
+	e->camera->dir_x = e->player->dir_x + e->camera->plane_x * e->camera->x;
+	e->camera->dir_y = e->player->dir_y + e->camera->plane_y * e->camera->x;
+	e->draw->map_x = (int)e->camera->pos_x;
+	e->draw->map_y = (int)e->camera->pos_y;
+	e->draw->dist_delta_x = sqrt(1 + pow(e->camera->dir_y, 2)
+								/ pow(e->camera->dir_x, 2));
+	e->draw->dist_delta_y = sqrt(1 + pow(e->camera->dir_x, 2)
+								/ pow(e->camera->dir_y, 2));
 }
 
-void		perform_dda(t_env *env, double *data, double *side, double *dir)
+static void	draw_column(t_env *e)
 {
-	int		hit;
-	int		visual_side;
-	double	map[3];
+	unsigned int	color;
+	int				y;
 
-	hit = 0;
-	map[0] = (int)env->pos_x;
-	map[1] = (int)env->pos_y;
-	while (!hit)
+	y = -1;
+	while ((y++) < HEIGHT)
 	{
-		visual_side = side[0] > side[1];
-		side[visual_side] += data[visual_side];
-		map[visual_side] += data[2 + visual_side];
-		hit = get_pos(env, (int)map[0], (int)map[1]);
+		if (y < e->draw->start)
+			color = CYAN;
+		else if (y > e->draw->end)
+			color = GREEN;
+		else
+			color = get_face_color(e);
+		set_pixel(e->render, e->draw->x, y, color);
 	}
-	if (hit > 0)
-	{
-		map[2] = (!visual_side ? env->pos_x : env->pos_y);
-		perform_pixel(env, map, visual_side, (map[visual_side] - map[2] +
-			(1 - data[2 + visual_side]) / 2) / dir[visual_side]);
-	}
-}
-
-void		process_raycasting(t_env *env, int x, double *ray_dir)
-{
-	double		side[2];
-	double		data[4];
-
-	env->temp_x = x;
-	data[0] = sqrt(1 + (ray_dir[1] * ray_dir[1]) / (ray_dir[0] * ray_dir[0]));
-	data[1] = sqrt(1 + (ray_dir[0] * ray_dir[0]) / (ray_dir[1] * ray_dir[1]));
-	data[2] = ray_dir[0] < 0 ? -1 : 1;
-	data[3] = ray_dir[1] < 0 ? -1 : 1;
-	side[0] = data[2] == -1 ? ((env->pos_x - (int)env->pos_x) * data[0]) :
-		(((int)env->pos_x + 1.0 - env->pos_x) * data[0]);
-	side[1] = data[3] == -1 ? ((env->pos_y - (int)env->pos_y) * data[1]) :
-		(((int)env->pos_y + 1.0 - env->pos_y) * data[1]);
-	perform_dda(env, data, side, ray_dir);
 }
 
 void		recompile_render(t_env *env)
 {
-	int			x;
-	double		camera_x;
-	double		ray_dir[2];
-
-	x = -1;
+	env->draw->x = -1;
 	if (env->render && env->render->data)
 		ft_bzero(env->render->data, env->render->line_size * HEIGHT);
-	while ((++x) < WIDTH)
+	while ((++env->draw->x) < WIDTH)
 	{
-		camera_x = (2 * x) / (double)(WIDTH - 1);
-		ray_dir[0] = env->dir_x + env->plane_x * camera_x;
-		ray_dir[1] = env->dir_y + env->plane_y * camera_x;
-		process_raycasting(env, x, ray_dir);
+		setup_pass(env);
+		process_raycasting(env);
+		draw_column(env);
 	}
 }

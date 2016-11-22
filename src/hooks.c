@@ -12,7 +12,19 @@
 
 #include "wolf3d.h"
 
-int				key_hook(int keycode, void *param)
+void			key_update(t_env *env)
+{
+	if (env->key_up)
+		move_player_up(env);
+	if (env->key_left)
+		rotate_player_left(env);
+	if (env->key_right)
+		rotate_player_right(env);
+	if (env->key_down)
+		move_player_down(env);
+}
+
+int				key_press(int keycode, void *param)
 {
 	t_env		*env;
 
@@ -22,13 +34,36 @@ int				key_hook(int keycode, void *param)
 		if (keycode == ESCAPE)
 			exit(destroy_env(env, 0));
 		else if (keycode == ARROW_UP)
-			move_player(env, 0.15, 1.0);
+			env->key_up = 1;
 		else if (keycode == ARROW_LEFT)
-			rotate_player(env, 0.15);
+			env->key_left = 1;
 		else if (keycode == ARROW_RIGHT)
-			rotate_player(env, -0.15);
+			env->key_right = 1;
 		else if (keycode == ARROW_DOWN)
-			move_player(env, 0.15, -1.0);
+			env->key_down = 1;
+		else
+			ft_printf("Keycode: %d\n", keycode);
+	}
+	return (param == NULL);
+}
+
+int				key_release(int keycode, void *param)
+{
+	t_env		*env;
+
+	if (param)
+	{
+		env = (t_env*)param;
+		if (keycode == ARROW_UP)
+			env->key_up = 0;
+		else if (keycode == ARROW_LEFT)
+			env->key_left = 0;
+		else if (keycode == ARROW_RIGHT)
+			env->key_right = 0;
+		else if (keycode == ARROW_DOWN)
+			env->key_down = 0;
+		else
+			ft_printf("Keycode: %d\n", keycode);
 	}
 	return (param == NULL);
 }
@@ -53,6 +88,7 @@ int				loop_hook(void *param)
 	if (param)
 	{
 		env = (t_env*)param;
+		key_update(env);
 		if (env->update)
 		{
 			recompile_render(env);

@@ -79,15 +79,17 @@ int						destroy_env(t_env *env, int exit_code)
 	return (exit_code);
 }
 
-unsigned int			get_face_color(unsigned char type)
+unsigned int			get_face_color(t_env *e)
 {
-	if (type == 1)
-		return (0xFF00FF);
-	else if (type == 2)
-		return (0x00FF00);
-	else if (type == 3)
-		return (0x0000FF);
-	else if (type == 4)
-		return (0xFFFFFF);
-	return (0xFFD800);
+	int			color;
+
+	if (e->draw->side == 0 && e->camera->dir_x >= 0)
+		color = PURPLE;
+	else if (e->draw->side == 0 && e->camera->dir_x < 0)
+		color = RED;
+	else if (e->draw->side == 1 && e->camera->dir_y <= 0)
+		color = YELLOW;
+	else
+		color = BLUE;
+	return (color);
 }

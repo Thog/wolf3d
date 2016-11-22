@@ -44,7 +44,6 @@ void		set_pixel(t_image *img, int x, int y, unsigned int color)
 	int		pos;
 
 	pos = (x * img->byte_per_pixel) + y * img->line_size;
-	color = img->endian ? swap_uint(color) : color;
 	img->data[pos] = color;
 	img->data[pos + 2] = color >> 16;
 	img->data[pos + 1] = color >> 8;

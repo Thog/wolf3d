@@ -58,7 +58,7 @@ int						parse_map(t_env *env, int fd)
 			if (!read8(fd, &test))
 				return (ft_error_retint("Map is incorrect!\n", 1));
 			env->map[y][x] = test;
-			ft_printf((env->pos_x == x && env->pos_y == y ? "X|" : "%d|"),
+			ft_printf((env->player->pos_x == x && env->player->pos_y == y ? "X|" : "%d|"),
 				env->map[y][x]);
 		}
 		ft_printf("\n");
@@ -74,7 +74,10 @@ t_env					*init_data(void)
 
 	error = 0;
 	fd = open("basic.wolf", O_RDONLY);
-	if (!(env = (t_env*)ft_memalloc(sizeof(t_env))))
+	if (!(env = (t_env*)ft_memalloc(sizeof(t_env)))
+		|| !(env->player = (t_player*)ft_memalloc(sizeof(t_player)))
+		|| !(env->camera = (t_camera*)ft_memalloc(sizeof(t_camera)))
+		|| !(env->draw = (t_draw*)ft_memalloc(sizeof(t_draw))))
 		error = ft_error_retint("Cannot allocate memory for env struct!\n", 1);
 	if (fd == -1)
 		error = ft_error_retint("File not found\n", 1);
@@ -84,11 +87,14 @@ t_env					*init_data(void)
 		if (!error)
 			ft_printf("xSize: %u, ySize: %u, blockSize: %u\n", env->map_x + 1,
 			env->map_y + 1, env->block_size);
-		env->pos_x = 7;
-		env->pos_y = 7;
-		env->dir_y = 1;
-		env->dir_x = -1;
-		env->plane_y = 0.66;
+		env->player->pos_x = 7.0;
+		env->player->pos_y = 7.0;
+		env->player->dir_x = DIR_X;
+		env->player->dir_y = DIR_Y;
+		env->player->speed_move = SPEED_MOVE;
+		env->player->speed_rotate = SPEED_ROTATE;
+		env->camera->plane_x = CAM_X;
+		env->camera->plane_y = CAM_Y;
 		error = error ? error : parse_map(env, fd);
 	}
 	close(fd);

@@ -22,6 +22,13 @@
 # define PROJ_ISO_X(X, Y, Z) ISO_C1 * X - ISO_C2 * Y
 # define PROJ_ISO_Y(X, Y, Z) -Z + (ISO_C1 / 2) * X + (ISO_C2 / 2) * Y
 # define RGB(R, G, B) ((R & 0xFF) << 16) | ((G & 0xFF) << 8) | (B & 0xFF)
+# define PURPLE 0xFF00FF
+# define RED 0xFF0000
+# define GREEN 0x00FF00
+# define BLUE 0x0000FF
+# define CYAN 0x00FFFF
+# define WHITE 0xFFFFFF
+# define YELLOW 0xFFD800
 # ifdef __APPLE__
 #  define ESCAPE 53
 # else
@@ -30,6 +37,10 @@
 # ifndef M_PI
 #  define M_PI acos(-1)
 # endif
+# define KEYPRESS 2
+# define KEYRELEASE 3
+# define KEYPRESSMASK (1L<<0)
+# define KEYRELEASEMASK (1L<<1)
 
 typedef int				(*t_transformer)(int x, int y, int z);
 typedef unsigned int	(*t_colorizer)(int iteration);

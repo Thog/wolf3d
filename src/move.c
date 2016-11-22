@@ -13,39 +13,64 @@
 #include "wolf3d.h"
 #include <stdio.h>
 
-int						get_pos(t_env *env, int x, int y)
+void					rotate_player_right(t_env *e)
 {
-	if (x <= env->map_x && y <= env->map_y)
-		return (env->map[x][y]);
-	return (-1);
+	double		old_dir;
+	double		old_plane;
+
+
+	old_dir = e->player->dir_x;
+	old_plane = e->camera->plane_x;
+	e->player->dir_x = e->player->dir_x * cos(-e->player->speed_rotate)
+		- e->player->dir_y * sin(-e->player->speed_rotate);
+	e->player->dir_y = old_dir * sin(-e->player->speed_rotate)
+		+ e->player->dir_y * cos(-e->player->speed_rotate);
+	e->camera->plane_x = e->camera->plane_x * cos(-e->player->speed_rotate)
+		- e->camera->plane_y * sin(-e->player->speed_rotate);
+	e->camera->plane_y = old_plane * sin(-e->player->speed_rotate)
+		+ e->camera->plane_y * cos(-e->player->speed_rotate);
+	e->update = 1;
 }
 
-void					move_player(t_env *env, double speed, double modifier)
+void					rotate_player_left(t_env *e)
 {
-	int			pos_x;
-	int			pos_y;
 
-	pos_x = env->pos_x + env->dir_x * speed * modifier;
-	pos_y = env->pos_y + env->dir_y * speed * modifier;
-	if (get_pos(env, pos_x, pos_y) <= 0)
-	{
-		env->pos_x += env->dir_x * speed * modifier;
-		env->pos_y += env->dir_y * speed * modifier;
-		env->update = 1;
-	}
+	double		old_dir;
+	double		old_plane;
+
+	old_dir = e->player->dir_x;
+	old_plane = e->camera->plane_x;
+	e->player->dir_x = e->player->dir_x * cos(e->player->speed_rotate)
+		- e->player->dir_y * sin(e->player->speed_rotate);
+	e->player->dir_y = old_dir * sin(e->player->speed_rotate)
+		+ e->player->dir_y * cos(e->player->speed_rotate);
+	e->camera->plane_x = e->camera->plane_x * cos(e->player->speed_rotate)
+		- e->camera->plane_y * sin(e->player->speed_rotate);
+	e->camera->plane_y = old_plane * sin(e->player->speed_rotate)
+		+ e->camera->plane_y * cos(e->player->speed_rotate);
+	e->update = 1;
 }
 
-void					rotate_player(t_env *env, double speed)
+void					move_player_down(t_env *e)
 {
-	double		temp;
+	if (e->map[(int)(e->player->pos_x - e->player->dir_x
+				* e->player->speed_move)][(int)e->player->pos_y] == 0)
+		e->player->pos_x -= e->player->dir_x * e->player->speed_move;
+	if (e->map[(int)e->player->pos_x][(int)(e->player->pos_y - e->player->dir_y
+				* e->player->speed_move)] == 0)
+		e->player->pos_y -= e->player->dir_y * e->player->speed_move;
+	e->update = 1;
+}
 
-	temp = env->dir_x;
-	env->dir_x = temp * cos(speed) - env->dir_y * sin(speed);
-	env->dir_y = temp * sin(speed) + env->dir_y * cos(speed);
-	temp = env->plane_x;
-	env->plane_x = temp * cos(speed) - env->plane_y * sin(speed);
-	env->plane_y = temp * sin(speed) + env->plane_y * cos(speed);
-	env->update = 1;
+void					move_player_up(t_env *e)
+{
+	if (e->map[(int)(e->player->pos_x + e->player->dir_x
+				* e->player->speed_move)][(int)(e->player->pos_y)] == 0)
+		e->player->pos_x += e->player->dir_x * e->player->speed_move;
+	if (e->map[(int)(e->player->pos_x)][(int)(e->player->pos_y + e->player->dir_y
+				* e->player->speed_move)] == 0)
+		e->player->pos_y += e->player->dir_y * e->player->speed_move;
+	e->update = 1;
 }
 
 void					render_infos(t_env *env)
@@ -53,10 +78,10 @@ void					render_infos(t_env *env)
 	char			*tmp;
 
 	mlx_string_put(env->mlx, env->win, 10, 10, 0xFFF00F, "Position");
-	tmp = ft_itoa_prefix("X: ", (int)env->pos_x);
+	tmp = ft_itoa_prefix("X: ", (int)env->player->pos_x);
 	mlx_string_put(env->mlx, env->win, 10, 50, 0xFFF00F, tmp);
 	ft_strdel(&tmp);
-	tmp = ft_itoa_prefix("X: ", (int)env->pos_x);
+	tmp = ft_itoa_prefix("Y: ", (int)env->player->pos_y);
 	mlx_string_put(env->mlx, env->win, 10, 90, 0xFFF00F, tmp);
 	ft_strdel(&tmp);
 }

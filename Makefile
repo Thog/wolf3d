@@ -10,34 +10,39 @@
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -g -Wall -Wextra -Werror -O0 -march=native -I./includes
-PRGFLAGS = -lft -lmlx -framework OpenGL -framework AppKit
+CFLAGS = -g -Wall -Wextra -Werror -I./includes
+PRGFLAGS = -L./libmlx -lmlx -L/usr/lib -lXext -lX11 -L./libft -lft
 CC = gcc
 
 NAME = wolf3d
-LIB = libft
-SRC = display.c graphics.c hooks.c image.c init.c io_utils.c main.c move.c utils.c
+LIBFT = libft
+LIBMLX = libmlx
+SRC = display.c graphics.c hooks.c image.c init.c io_utils.c main.c move.c \
+	  utils.c raycasting.c
 SRCDIR = src
 OUTDIR = out
 SRCS = $(addprefix $(SRCDIR)/, $(SRC))
 OBJ = $(addprefix $(OUTDIR)/, $(SRC:.c=.o))
 
 $(NAME): $(OUTDIR) $(OBJ)
-	@$(MAKE) -C $(LIB)
-	@$(CC) -o $(NAME) $(CFLAGS) -I./libft -L./libft $(PRGFLAGS) $(OBJ)
+	make -C $(LIBFT)
+	make -C $(LIBMLX)
+	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(PRGFLAGS)
+
 $(OUTDIR)/%.o: $(SRCDIR)/%.c
-	@$(CC) -I $(LIB) -o $@ -c $? $(CFLAGS)
+	$(CC) -I $(LIBFT) -I $(LIBMLX) -o $@ -c $? $(CFLAGS)
 
 $(OUTDIR):
 	@mkdir -p $(OUTDIR)
 
 clean:
-	@$(MAKE) -C $(LIB) $@
+	make -C $(LIBFT) $@
+	make -C $(LIBMLX) $@
 	@rm -f $(OBJ)
 	@rm -rf $(OUTDIR)
 
 fclean: clean
-	@$(MAKE) -C $(LIB) $@
+	make -C $(LIBFT) $@
 	@rm -f $(NAME)
 
 .PHONY: clean fclean re
