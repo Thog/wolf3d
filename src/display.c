@@ -30,6 +30,7 @@ int			init_display(t_env *env)
 	ft_bzero(env->render->data, env->render->line_size * HEIGHT);
 	mlx_hook(env->win, KEYPRESS, KEYPRESSMASK, key_press, env);
 	mlx_hook(env->win, KEYRELEASE, KEYRELEASEMASK, key_release, env);
+	mlx_hook(env->win, CLOSE, CLOSEMASK, close_event, env);
 	mlx_expose_hook(env->win, expose_hook, env);
 	mlx_loop_hook(env->mlx, loop_hook, env);
 	return (0);

@@ -12,6 +12,13 @@
 
 #include "wolf3d.h"
 
+int		close_event(void *param)
+{
+	if (param)
+		exit(destroy_env((t_env*)param, 0));
+	return (param == NULL);
+}
+
 int		main(void)
 {
 	t_env		*env;

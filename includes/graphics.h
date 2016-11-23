@@ -41,6 +41,8 @@
 # define KEYRELEASE 3
 # define KEYPRESSMASK (1L<<0)
 # define KEYRELEASEMASK (1L<<1)
+# define CLOSE 17
+# define CLOSEMASK (1L<<17)
 
 typedef int				(*t_transformer)(int x, int y, int z);
 typedef unsigned int	(*t_colorizer)(int iteration);
@@ -86,4 +88,5 @@ int						key_hook(int keycode, void *param);
 int						mouse_hook(int button, int x, int y, void *param);
 int						motion_hook(int x, int y, void *param);
 int						loop_hook(void *param);
+int						close_event(void *param);
 #endif
