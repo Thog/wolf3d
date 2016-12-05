@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:28 by tguillem          #+#    #+#             */
-/*   Updated: 2016/12/05 13:44:11 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/12/05 13:53:45 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ int						parse_map(t_env *env, int fd)
 	return (0);
 }
 
-t_env					*init_data(void)
+t_env					*init_data(char *file)
 {
 	int					fd;
 	int					error;
 	t_env				*env;
 
 	error = 0;
-	fd = open("basic.wolf", O_RDONLY);
+	fd = open(file, O_RDONLY);
 	if (alloc_data(&env))
 		error = ft_error_retint("Cannot allocate memory for env struct!\n", 1);
 	if (fd == -1)

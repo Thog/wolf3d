@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 11:26:50 by tguillem          #+#    #+#             */
-/*   Updated: 2016/12/05 13:35:18 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/12/05 13:55:58 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct			s_env
 	t_draw				*draw;
 }						t_env;
 
-t_env					*init_data(void);
+t_env					*init_data(char *file);
 int						init_display(t_env *env);
 int						destroy_env(t_env *env, int exit_code);
 int						parse_header(t_env *env, int fd);
