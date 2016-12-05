@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/27 11:26:50 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 18:26:35 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/12/05 13:35:18 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@
 # endif
 # define ARROW_LEFT ARROW_OFFSET + 1
 
-typedef struct	s_player
+typedef struct			s_player
 {
-	double		pos_x;
-	double		pos_y;
-	double		dir_x;
-	double		dir_y;
-	double		speed_move;
-	double		speed_rotate;
-}				t_player;
+	double				pos_x;
+	double				pos_y;
+	double				dir_x;
+	double				dir_y;
+	double				speed_move;
+	double				speed_rotate;
+}						t_player;
 
 typedef struct			s_camera
 {
@@ -58,24 +58,24 @@ typedef struct			s_camera
 	double				dist_wall;
 }						t_camera;
 
-typedef struct	s_draw
+typedef struct			s_draw
 {
-	int			x;
-	int			map_x;
-	int			map_y;
-	int			height;
-	int			start;
-	int			end;
-	int			color;
-	int			side;
-	int			hit;
-	int			step_x;
-	int			step_y;
-	double		dist_side_x;
-	double		dist_side_y;
-	double		dist_delta_x;
-	double		dist_delta_y;
-}				t_draw;
+	int					x;
+	int					map_x;
+	int					map_y;
+	int					height;
+	int					start;
+	int					end;
+	int					color;
+	int					side;
+	int					hit;
+	int					step_x;
+	int					step_y;
+	double				dist_side_x;
+	double				dist_side_y;
+	double				dist_delta_x;
+	double				dist_delta_y;
+}						t_draw;
 
 typedef struct			s_env
 {

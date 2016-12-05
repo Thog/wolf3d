@@ -6,7 +6,7 @@
 /*   By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 16:03:53 by tguillem          #+#    #+#             */
-/*   Updated: 2016/07/18 18:36:56 by tguillem         ###   ########.fr       */
+/*   Updated: 2016/12/05 13:47:11 by tguillem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void					rotate_player_right(t_env *e)
 {
 	double		old_dir;
 	double		old_plane;
-
 
 	old_dir = e->player->dir_x;
 	old_plane = e->camera->plane_x;
@@ -34,7 +33,6 @@ void					rotate_player_right(t_env *e)
 
 void					rotate_player_left(t_env *e)
 {
-
 	double		old_dir;
 	double		old_plane;
 

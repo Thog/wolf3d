@@ -6,7 +6,7 @@
 #    By: tguillem <tguillem@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 17:03:41 by tguillem          #+#    #+#              #
-#    Updated: 2016/07/18 17:19:34 by tguillem         ###   ########.fr        #
+#    Updated: 2016/12/05 13:31:34 by tguillem         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ OBJ = $(addprefix $(OUTDIR)/, $(SRC:.c=.o))
 
 $(NAME): $(OUTDIR) $(OBJ)
 	make -C $(LIBFT)
-	make -C $(LIBMLX)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJ) $(PRGFLAGS)
 
 $(OUTDIR)/%.o: $(SRCDIR)/%.c
@@ -37,7 +36,6 @@ $(OUTDIR):
 
 clean:
 	make -C $(LIBFT) $@
-	make -C $(LIBMLX) $@
 	@rm -f $(OBJ)
 	@rm -rf $(OUTDIR)
 
